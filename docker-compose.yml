@@ -1,0 +1,22 @@
+services:
+  project:
+    container_name: project
+    image: project
+    build: ./ui/next/.
+    command: npm run start
+    volumes:
+      - '.:/usr/local/udemy'
+    network_mode: host
+    depends_on:
+      - api
+  api:
+    image: golang:alpine
+    container_name: api
+    volumes:
+      - ./api/.:/usr/local/api
+    depends_on:
+      - mongodb
+    network_mode: host
+  mongodb:
+    image: mongo:latest
+    network_mode: host
